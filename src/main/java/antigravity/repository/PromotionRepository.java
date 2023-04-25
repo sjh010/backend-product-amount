@@ -27,7 +27,7 @@ public class PromotionRepository {
                         .promotion_type(PromotionType.valueOf(rs.getString("promotion_type")))
                         .name(rs.getString("name"))
                         .discount_type(DiscountType.valueOf(rs.getString("discount_type")))
-                        .discount_value(rs.getInt(rs.getInt("discount_value")))
+                        .discount_value(rs.getInt("discount_value"))
                         .use_started_at(rs.getDate("use_started_at"))
                         .use_ended_at(rs.getDate("use_ended_at"))
                         .build()

@@ -14,7 +14,7 @@ public class PromotionProductsRepository {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public List<PromotionProducts> getPromotionProductsList(int product_id) {
-        String query = "SELECT * FROM `promotion_products` WHERE id = :product_id ";
+        String query = "SELECT * FROM `promotion_products` WHERE product_id = :product_id ";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("product_id", product_id);
