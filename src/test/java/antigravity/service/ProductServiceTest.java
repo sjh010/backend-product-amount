@@ -13,13 +13,14 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@DisplayName("상품 가격 추출 테스트")
 class ProductServiceTest {
 
     @Autowired
     private ProductService productService;
 
     @Test
-    @DisplayName("상품 가격 추출 성공 테스트 - 쿠폰 미요청")
+    @DisplayName("성공 테스트 - 쿠폰 미요청")
     void get_product_amount_success_no_coupon() {
         // given
         // 상품가격 : 215,000
@@ -40,7 +41,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("상품 가격 추출 성공 테스트 - 금액할인 쿠폰 적용")
+    @DisplayName("성공 테스트 - 금액할인 쿠폰 적용")
     void get_product_amount_success_one_coupon() {
         // given
         // 상품가격 : 100,000 / 할인금액 : 50,000
@@ -62,7 +63,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("상품 가격 추출 성공 테스트 - 금액할일 쿠폰, %할인 쿠폰 적용")
+    @DisplayName("성공 테스트 - 금액할일 쿠폰, %할인 쿠폰 적용")
     void get_product_amount_success_tow_coupons() {
         // given
         // 상품가격 : 100,000 / 할인금액 : 50,000 / 할인 % : 10%
@@ -84,7 +85,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("상품 가격 추출 실패 테스트 - 프로모션 기간 전")
+    @DisplayName("실패 테스트 - 프로모션 기간 전")
     void get_product_amount_failure_not_yet_promotion() {
         // given
         ProductInfoRequest request = ProductInfoRequest.builder()
@@ -100,7 +101,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("상품 가격 추출 실패 테스트 - 프로모션 기간 만료")
+    @DisplayName("실패 테스트 - 프로모션 기간 만료")
     void get_product_amount_failure_promotion_expiration() {
         // given
         ProductInfoRequest request = ProductInfoRequest.builder()
@@ -116,7 +117,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("상품 가격 추출 실패 테스트 - 프로모션 적용 상품 아님")
+    @DisplayName("실패 테스트 - 프로모션 적용 상품 아님")
     void get_product_amount_failure_not_promotion_product() {
         // given
         ProductInfoRequest request = ProductInfoRequest.builder()
@@ -132,7 +133,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("상품 가격 추출 실패 테스트 - 할인금액이 상품금액보다 큰 경우")
+    @DisplayName("실패 테스트 - 할인금액이 상품금액보다 큰 경우")
     void get_product_amount_failure_over_discount() {
         // given
         ProductInfoRequest request = ProductInfoRequest.builder()
@@ -148,7 +149,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("상품 가격 추출 실패 테스트 - 상품 가격이 최소 가격보다 아래인 경우")
+    @DisplayName("실패 테스트 - 상품 가격이 최소 가격보다 아래인 경우")
     void get_product_amount_failure_minimum_price() {
         // given
         ProductInfoRequest request = ProductInfoRequest.builder()
@@ -164,7 +165,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("상품 가격 추출 실패 테스트 - 상품 가격이 최대 가격보다 높은 경우")
+    @DisplayName("실패 테스트 - 상품 가격이 최대 가격보다 높은 경우")
     void get_product_amount_failure_maximum_price() {
         // given
         ProductInfoRequest request = ProductInfoRequest.builder()
@@ -180,7 +181,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("상품 가격 추출 실패 테스트 - 존재하지 않는 상품")
+    @DisplayName("실패 테스트 - 존재하지 않는 상품")
     void get_product_amount_failure_not_exist_product() {
         // given
         ProductInfoRequest request = ProductInfoRequest.builder()
