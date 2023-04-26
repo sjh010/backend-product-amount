@@ -46,12 +46,12 @@ public class ProductService {
      */
     @Transactional
     public ProductAmountResponse getProductAmount(ProductInfoRequest request) {
-        log.info("request : {}", request);
+        log.debug("{}", request);
 
         Product product = productRepository.getProduct(request.getProductId())
                 .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_PRODUCT));
 
-        log.info("product : {}", product);
+        log.debug("{}", product);
 
         // 1. 상품 가격 체크
         validateProductPrice(product.getPrice());
@@ -74,6 +74,8 @@ public class ProductService {
                 throw new CustomException(ErrorCode.NOT_EXIST_PROMOTION);
             } else {
                 for (Promotion promotion : promotionList) {
+                    log.debug("{}", promotion);
+
                     // 3. 프로모션 기간 체크
                     validatePromotionDate(promotion.getUse_started_at(), promotion.getUse_ended_at());
 
@@ -83,10 +85,7 @@ public class ProductService {
                     totalDiscountValue += discountPrice;
 
                     // 4. 할인금액 체크
-                    if (finalPrice < 0) {
-                        throw new CustomException(ErrorCode.OVER_DISCOUNT);
-                    }
-
+                    validateDiscountPrice(finalPrice);
                 }
             }
         }
@@ -151,6 +150,18 @@ public class ProductService {
             throw new CustomException(ErrorCode.NOT_YET_PROMOTION_DATE);
         } else if (now.after(endDate)) {
             throw new CustomException(ErrorCode.PROMOTION_EXPIRATION);
+        }
+    }
+
+    /**
+     * 할인된 금액 체크
+     * - 할인된 금액이 기존 상품 금액을 초과하는지 체크한다.
+     *
+     * @param finalPrice 할인된 금액
+     */
+    private void validateDiscountPrice(int finalPrice) {
+        if (finalPrice < 0) {
+            throw new CustomException(ErrorCode.OVER_DISCOUNT);
         }
     }
 
